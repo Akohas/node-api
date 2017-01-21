@@ -2,7 +2,9 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let MongoClient = require('mongodb').MongoClient;
 let ObjectID = require('mongodb').ObjectID;
+let morgan = require('morgan');
 
+let mongoDBmodule = require('./custom_modules/mongo-require.js');
 let app = express();
 let db;
 
@@ -10,6 +12,7 @@ app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/static'));
+app.use(morgan('combined'));
 
 app.use(function(req, res, next){         
   console.log('%s %s', req.method, req.url);
@@ -108,14 +111,7 @@ app.post('/del', function( req, res ){
 
 });
 
+  mongoDBmodule( app, MongoClient  )
+    .then( function( database ){ return db = database; } )
+    .catch( function error(err){ console.log(err) } );
 
-MongoClient.connect('mongodb://localhost:27017/api', function(err, database){
-  if(err){
-    return console.log(err);
-  }
-  db = database;
-  app.listen(8000, function(){
-    console.log('api started');
-  });
-
-});
