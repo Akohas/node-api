@@ -4,7 +4,7 @@ let MongoClient = require('mongodb').MongoClient;
 let ObjectID = require('mongodb').ObjectID;
 let morgan = require('morgan');
 
-let mongoDBmodule = require('./custom_modules/mongo-require.js');
+let mongoDBmodule = require('./custom_modules/server-settings/mongo-require.js');
 let app = express();
 let db;
 
