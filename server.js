@@ -49,7 +49,8 @@ app.post('/add', function( req, res ){
   let task = {
     date,
     title,
-    description
+    description,
+    done: false
   };
 
   
